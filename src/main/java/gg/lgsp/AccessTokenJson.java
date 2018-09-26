@@ -59,59 +59,6 @@ public class AccessTokenJson {
 		return response != null ? response.toString() : "";
 	}
 
-	
-	public String gen() {
-		try {
-		URL url = new URL("https://192.168.1.166:8244/token");
-		HttpsURLConnection.setDefaultHostnameVerifier(
-				new javax.net.ssl.HostnameVerifier(){
-
-				    public boolean verify(String hostname,
-				            javax.net.ssl.SSLSession sslSession) {
-				        return hostname.equals("192.168.1.166");
-				    }
-				});
-		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-		conn.setDoInput(true);
-		conn.setDoOutput(true);
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Authorization", "Basic amVYTEh5OWVJSjlzZDdnMjFwS1dEaDFzM0M0YTppT3NiMWhodkUzXzU4ZFhnZmNIT0VvcnBkVG9h");
-		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		conn.setRequestProperty("grant_type", "client_credentials");
-		OutputStream os = conn.getOutputStream();
-		BufferedWriter writer = new BufferedWriter(
-		                new OutputStreamWriter(os, "UTF-8"));
-		writer.write("grant_type=client_credentials");
-		writer.flush();
-		writer.close();
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : "
-					+ conn.getResponseCode());
-		}
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-			(conn.getInputStream())));
-
-		String output;
-		System.out.println("gen gen Output from Server .... \n");
-		while ((output = br.readLine()) != null) {
-			System.out.println(output);
-		}
-
-		conn.disconnect();
-
-	  } catch (MalformedURLException e) {
-
-		e.printStackTrace();
-
-	  } catch (IOException e) {
-
-		e.printStackTrace();
-
-	  }
-		return "";
-	}
-	
 	public AccessToken generate() {
 		AccessToken accessToken = null;
 		if (getConsumerKey() != null && getSecretKey() != null) {
